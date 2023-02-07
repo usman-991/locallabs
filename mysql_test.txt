@@ -1,9 +1,23 @@
 
 MySQL test
 
-1. SELECT p.product_name, p.product_img_url, p.product_url, p.product_price_min, p.product_short_description FROM grommet_products p inner join grommet_product_categories gpc on gpc.product_id = p.id inner join grommet_gifts_categories ggc on ggc.id = gpc.product_category_id where ggc.sub_category = 'Jewelry' and is_sold_out = 0;
+1. SELECT p.product_name, p.product_img_url, p.product_url, p.product_price_min, p.product_short_description
+ FROM grommet_products p inner join grommet_product_categories gpc on gpc.product_id = p.id
+ inner join grommet_gifts_categories ggc on ggc.id = gpc.product_category_id
+ where ggc.sub_category = 'Jewelry' and is_sold_out = 0;
 
 
-2. SELECT p.product_name, p.product_img_url, p.product_url, p.product_price_min, p.product_short_description FROM grommet_products p inner join grommet_product_to_keyword ptk on p.id = ptk.product_id inner join grommet_product_keywords pk on pk.id = ptk.keyword_id where pk.keyword = 'Hair accessor' and p.is_sold_out = 0;
+2. SELECT p.product_name, p.product_img_url, p.product_url, p.product_price_min, p.product_short_description
+ FROM grommet_products p inner join grommet_product_to_keyword ptk on p.id = ptk.product_id
+ inner join grommet_product_keywords pk on pk.id = ptk.keyword_id
+ where pk.keyword = 'Hair accessor' and p.is_sold_out = 0;
 
-3. SELECT p.product_name, p.product_img_url, p.product_url, p.product_price_min, p.product_short_description FROM grommet_products p inner join grommet_product_categories pc on p.id = pc.product_id inner join grommet_gifts_categories gc on gc.id = pc.product_category_id inner join grommet_product_to_keyword ptkw on p.id = ptkw.product_id inner join grommet_product_keywords pkw on ptkw.keyword_id = pkw.id where (pkw.keyword='Aromatherapy' OR (gc.sub_category = 'Beauty & Personal Care' AND gc.sub_category='SkinCare')) and p.is_sold_out = 0;
+3. SELECT products.product_name, products.product_img_url, products.product_url, products.product_price_min,
+products.product_short_description FROM grommet_products products
+inner join grommet_product_categories as product_categories on products.id = product_categories.product_id
+inner join grommet_gifts_categories as gift_categories on gift_categories.id = product_categories.product_category_id
+inner join grommet_product_to_keyword as products_keyword on products.id = products_keyword.product_id
+inner join grommet_product_keywords as keywords on products_keyword.keyword_id = keywords.id
+where (keywords.keyword='Aromatherapy'
+OR (gift_categories.sub_category = 'Beauty & Personal Care' OR gift_categories.sub_category='SkinCare'))
+and products.is_sold_out = 0;
